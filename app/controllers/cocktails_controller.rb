@@ -5,9 +5,11 @@ class CocktailsController < ApplicationController
 
   def create
     @cocktail = Cocktail.new(strong_params)
-    @cocktail.save
-
-    redirect_to cocktails_path(@cocktails)
+    if @cocktail.save
+      redirect_to cocktail_path(@cocktail)
+    else
+      render :new
+    end
   end
 
   def new
@@ -39,7 +41,7 @@ class CocktailsController < ApplicationController
   private
 
   def strong_params
-    params.require(:cocktails).permit(:name)
+    params.require(:cocktail).permit(:name)
   end
 
 end
